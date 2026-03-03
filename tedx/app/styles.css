@@ -353,7 +353,14 @@ button {
 }
 
 #events .metaIcon {
-  font-size: 1.2rem;
+  width: 20px;
+  height: 20px;
+  color: #EB0028;
+  flex-shrink: 0;
+  stroke: currentColor;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #events .btn {

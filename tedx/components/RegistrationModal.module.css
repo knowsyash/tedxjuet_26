@@ -1,0 +1,246 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.modal {
+  position: relative;
+  background: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(235, 0, 40, 0.3);
+  border: 1px solid rgba(235, 0, 40, 0.5);
+  max-width: 550px;
+  width: 100%;
+  max-height: 85vh;
+  z-index: 10000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  border-bottom: 1px solid rgba(235, 0, 40, 0.3);
+  position: sticky;
+  top: 0;
+  background: #1a1a1a;
+  flex-shrink: 0;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  color: #EB0028;
+  background: rgba(235, 0, 40, 0.1);
+}
+
+.modalContent {
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.input,
+.select,
+.textarea {
+  background: #0a0a0a;
+  border: 1px solid rgba(235, 0, 40, 0.3);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #EB0028;
+  background: rgba(235, 0, 40, 0.05);
+  box-shadow: 0 0 0 3px rgba(235, 0, 40, 0.1);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #666;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.select option {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submitButton {
+  background: linear-gradient(135deg, #EB0028 0%, #c40020 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.submitButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff1a3a 0%, #EB0028 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(235, 0, 40, 0.3);
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.errorMessage {
+  background: rgba(235, 50, 50, 0.1);
+  border: 1px solid rgba(235, 50, 50, 0.5);
+  color: #ff6b6b;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.successMessage {
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.successIcon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #EB0028 0%, #c40020 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.successMessage h3 {
+  color: #ffffff;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.successMessage p {
+  color: #ccc;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.confirmationText {
+  color: #EB0028 !important;
+  font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .modal {
+    max-width: 90%;
+    width: 100%;
+    border-radius: 12px;
+    max-height: 90vh;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal {
+    width: 95%;
+    max-height: 85vh;
+    border-radius: 12px;
+  }
+
+  .modalHeader {
+    padding: 1.5rem;
+  }
+
+  .modalContent {
+    padding: 1.5rem;
+  }
+
+  .modalHeader h2 {
+    font-size: 1.2rem;
+  }
+
+  .form {
+    gap: 1rem;
+  }
+
+  .formGroup {
+    gap: 0.4rem;
+  }
+}

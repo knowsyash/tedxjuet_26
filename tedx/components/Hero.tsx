@@ -115,7 +115,7 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.6 }}
           >
-            3rd May 2025
+            11th April 2026
           </motion.div>
 
           {/* Event Location */}

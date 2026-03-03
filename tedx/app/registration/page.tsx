@@ -12,7 +12,6 @@ interface FormData {
   enrollmentNumber: string
   year: string
   motivation: string
-  ticketType: string
 }
 
 export default function RegistrationPage() {
@@ -21,8 +20,7 @@ export default function RegistrationPage() {
     email: '',
     enrollmentNumber: '',
     year: '',
-    motivation: '',
-    ticketType: ''
+    motivation: ''
   })
 
   const [submitted, setSubmitted] = useState(false)
@@ -43,7 +41,7 @@ export default function RegistrationPage() {
     setError('')
 
     // Basic validation
-    if (!formData.name || !formData.email || !formData.enrollmentNumber || !formData.year || !formData.motivation || !formData.ticketType) {
+    if (!formData.name || !formData.email || !formData.enrollmentNumber || !formData.year || !formData.motivation) {
       setError('Please fill in all fields')
       setLoading(false)
       return
@@ -62,8 +60,7 @@ export default function RegistrationPage() {
         email: '',
         enrollmentNumber: '',
         year: '',
-        motivation: '',
-        ticketType: ''
+        motivation: ''
       })
 
       // Reset after 3 seconds
@@ -118,12 +115,20 @@ export default function RegistrationPage() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <div className={styles.detailItem}>
-                <span className={styles.icon}>📅</span>
+                <svg className={styles.icon} viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
                 <span>April 11, 2026</span>
               </div>
               <div className={styles.divider}>|</div>
               <div className={styles.detailItem}>
-                <span className={styles.icon}>📍</span>
+                <svg className={styles.icon} viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
                 <span>JUET's MultiPurpose Hall</span>
               </div>
             </motion.div>
@@ -234,7 +239,7 @@ export default function RegistrationPage() {
                     <option value="2nd">2nd Year</option>
                     <option value="3rd">3rd Year</option>
                     <option value="4th">4th Year</option>
-                    <option value="other">Other</option>
+                    {/* <option value="other">Other</option> */}
                   </select>
                 </div>
 
@@ -250,24 +255,6 @@ export default function RegistrationPage() {
                     rows={4}
                     required
                   ></textarea>
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="ticketType" className={styles.label}>Ticket Type *</label>
-                  <select
-                    id="ticketType"
-                    name="ticketType"
-                    value={formData.ticketType}
-                    onChange={handleChange}
-                    className={styles.select}
-                    required
-                  >
-                    <option value="">Select a ticket type</option>
-                    <option value="general">General Admission</option>
-                    <option value="student">Student Pass</option>
-                    <option value="vip">VIP Pass</option>
-                    <option value="group">Group Pass (10+ people)</option>
-                  </select>
                 </div>
 
                 <motion.button

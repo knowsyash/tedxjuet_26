@@ -159,11 +159,17 @@ export default function Events() {
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
                 <div className="metaItem">
-                  <span className="metaIcon">📍</span>
+                  <svg className="metaIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
                   <span>JUET Campus Auditorium</span>
                 </div>
                 <div className="metaItem">
-                  <span className="metaIcon">⏰</span>
+                  <svg className="metaIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
                   <span>6:00 PM - 10:00 PM</span>
                 </div>
               </motion.div>
