@@ -24,14 +24,25 @@ export default function Navbar() {
   }, [])
 
   useEffect(() => {
+    let rafId: number
     const handleMouseMove = (e: MouseEvent) => {
-      if (navRef.current) {
-        const navRect = navRef.current.getBoundingClientRect()
-        setMouseX(e.clientX - navRect.left)
+      if (rafId) {
+        cancelAnimationFrame(rafId)
       }
+      rafId = requestAnimationFrame(() => {
+        if (navRef.current) {
+          const navRect = navRef.current.getBoundingClientRect()
+          setMouseX(e.clientX - navRect.left)
+        }
+      })
     }
     window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      if (rafId) {
+        cancelAnimationFrame(rafId)
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -72,7 +83,7 @@ export default function Navbar() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const navItems = ['Home', 'About', 'Events', 'Speakers', 'Team', 'Contact']
+  const navItems = ['Register', 'About', 'Events', 'Speakers', 'Team', 'Contact']
 
   // Magnification component for each nav item
   const MagnifyNavItem = ({ item, mouseX }: { item: string; mouseX: number }) => {
@@ -103,8 +114,8 @@ export default function Navbar() {
       <motion.button
         ref={ref}
         onClick={() => {
-          if (item === 'Home') {
-            router.push('/')
+          if (item === 'Register') {
+            router.push('/registration')
           } else if (item === 'About' || item === 'Speakers' || item === 'Team' || item === 'Contact') {
             router.push(`/${item.toLowerCase()}`)
           } else if (item === 'Events') {
@@ -408,8 +419,8 @@ export default function Navbar() {
                   <motion.button
                     key={item}
                     onClick={() => {
-                      if (item === 'Home') {
-                        router.push('/')
+                      if (item === 'Register') {
+                        router.push('/registration')
                         setMobileMenuOpen(false)
                       } else if (item === 'About' || item === 'Speakers' || item === 'Team' || item === 'Contact') {
                         router.push(`/${item.toLowerCase()}`)

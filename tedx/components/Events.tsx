@@ -114,7 +114,7 @@ export default function Events() {
           >
             Events
           </motion.h2>
-          <motion.a
+          {/* <motion.a
             href="#events"
             className={styles.viewDetails}
             initial={{ opacity: 0, x: 50 }}
@@ -123,7 +123,7 @@ export default function Events() {
             aria-label="View all event details"
           >
             View Event Details
-          </motion.a>
+          </motion.a> */}
         </header>
 
         {/* Events Grid */}

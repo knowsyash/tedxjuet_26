@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
+import { Calendar, MapPin } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import styles from './page.module.css'
@@ -11,8 +12,6 @@ interface FormData {
   email: string
   enrollmentNumber: string
   year: string
-  motivation: string
-  ticketType: string
 }
 
 export default function RegistrationPage() {
@@ -20,9 +19,7 @@ export default function RegistrationPage() {
     name: '',
     email: '',
     enrollmentNumber: '',
-    year: '',
-    motivation: '',
-    ticketType: ''
+    year: ''
   })
 
   const [submitted, setSubmitted] = useState(false)
@@ -43,27 +40,41 @@ export default function RegistrationPage() {
     setError('')
 
     // Basic validation
-    if (!formData.name || !formData.email || !formData.enrollmentNumber || !formData.year || !formData.motivation || !formData.ticketType) {
+    if (!formData.name || !formData.email || !formData.enrollmentNumber || !formData.year) {
       setError('Please fill in all fields')
       setLoading(false)
       return
     }
 
+    // Email domain validation
+    if (!formData.email.toLowerCase().endsWith('@juetguna.in')) {
+      setError('Only @juetguna.in email addresses are allowed')
+      setLoading(false)
+      return
+    }
+
     try {
-      // Simulate form submission (replace with actual API call)
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
-      // Here you would typically send the data to your backend
-      console.log('Form submitted:', formData)
+      // Submit to Google Sheets via API
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Registration failed')
+      }
       
       setSubmitted(true)
       setFormData({
         name: '',
         email: '',
         enrollmentNumber: '',
-        year: '',
-        motivation: '',
-        ticketType: ''
+        year: ''
       })
 
       // Reset after 3 seconds
@@ -71,7 +82,7 @@ export default function RegistrationPage() {
         setSubmitted(false)
       }, 3000)
     } catch (err) {
-      setError('Failed to submit registration. Please try again.')
+      setError(err instanceof Error ? err.message : 'Failed to submit registration. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -118,30 +129,15 @@ export default function RegistrationPage() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               <div className={styles.detailItem}>
-                <span className={styles.icon}>📅</span>
+                <Calendar className={styles.icon} size={18} />
                 <span>April 11, 2026</span>
               </div>
               <div className={styles.divider}>|</div>
               <div className={styles.detailItem}>
-                <span className={styles.icon}>📍</span>
+                <MapPin className={styles.icon} size={18} />
                 <span>JUET's MultiPurpose Hall</span>
               </div>
             </motion.div>
-          </motion.div>
-
-          {/* About Section */}
-          <motion.div
-            className={styles.aboutSection}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            <h2 className={styles.aboutTitle}>About TEDxJUET</h2>
-            <p className={styles.aboutText}>
-              TEDxJUET brings the spirit of TED to our campus community. We believe in the power of ideas to change the world. 
-              Our event brings together brilliant minds from diverse fields to share transformative ideas and inspire meaningful 
-              conversations about the future. Join us for an evening of inspiring talks, networking, and groundbreaking conversations.
-            </p>
           </motion.div>
 
           {/* Registration Form Section */}
@@ -149,7 +145,7 @@ export default function RegistrationPage() {
             className={styles.formSection}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
           >
             <h2 className={styles.formTitle}>Register for the Event</h2>
             
@@ -161,9 +157,8 @@ export default function RegistrationPage() {
                 transition={{ duration: 0.6 }}
               >
                 <div className={styles.successIcon}>✓</div>
-                <h3>Registration Successful!</h3>
-                <p>Thank you for registering for TEDxJUET. We're excited to see you at the event!</p>
-                <p className={styles.confirmationText}>A confirmation email has been sent to {formData.email}</p>
+                <h3>Thank You for Submitting!</h3>
+                <p>We look forward to seeing you at TEDxJUET.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className={styles.form}>
@@ -192,14 +187,14 @@ export default function RegistrationPage() {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label htmlFor="email" className={styles.label}>Email *</label>
+                  <label htmlFor="email" className={styles.label}>Email (JUET GSuite Only) *</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="Enter your email address"
+                    placeholder="enrollmentnumber@juetguna.in"
                     className={styles.input}
                     required
                   />
@@ -238,38 +233,6 @@ export default function RegistrationPage() {
                   </select>
                 </div>
 
-                <div className={styles.formGroup}>
-                  <label htmlFor="motivation" className={styles.label}>Why do you want to attend? (Brief) *</label>
-                  <textarea
-                    id="motivation"
-                    name="motivation"
-                    value={formData.motivation}
-                    onChange={handleChange}
-                    placeholder="Tell us what excites you about this event..."
-                    className={styles.textarea}
-                    rows={4}
-                    required
-                  ></textarea>
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="ticketType" className={styles.label}>Ticket Type *</label>
-                  <select
-                    id="ticketType"
-                    name="ticketType"
-                    value={formData.ticketType}
-                    onChange={handleChange}
-                    className={styles.select}
-                    required
-                  >
-                    <option value="">Select a ticket type</option>
-                    <option value="general">General Admission</option>
-                    <option value="student">Student Pass</option>
-                    <option value="vip">VIP Pass</option>
-                    <option value="group">Group Pass (10+ people)</option>
-                  </select>
-                </div>
-
                 <motion.button
                   type="submit"
                   className={styles.submitButton}
@@ -281,18 +244,6 @@ export default function RegistrationPage() {
                 </motion.button>
               </form>
             )}
-          </motion.div>
-
-          {/* Footer Notice */}
-          <motion.div
-            className={styles.footerNotice}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-          >
-            <p>
-              This independent TEDx event is operated under license from TED.
-            </p>
           </motion.div>
         </div>
       </section>

@@ -87,7 +87,7 @@ export default function ContactPage() {
                 <h3 className={styles.followUsHeading}>Follow Us</h3>
                 <div className={styles.socialLinksContainer}>
                   <motion.a
-                    href="https://instagram.com/tedxjuet"
+                    href="https://www.instagram.com/tedxjuet/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.socialLink}
@@ -102,7 +102,7 @@ export default function ContactPage() {
                     Instagram
                   </motion.a>
                   <motion.a
-                    href="https://linkedin.com/company/tedxjuet"
+                    href="https://www.linkedin.com/company/tedxjuet/posts/?feedView=all"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={styles.socialLink}
