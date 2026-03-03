@@ -25,87 +25,88 @@ const teamMembers = [
     bio: "Supporting event coordination and execution",
     image: "/team/member2.jpg"
   },
-  // Design Team
+  // Development Team (Priority)
   {
     id: 3,
-    name: "Ajitesh Awasthi",
-    role: "Head Designing",
-    department: "Design",
-    bio: "Creating stunning visual experiences for TEDxJUET",
+    name: "Yash Singhal",
+    role: "Development Head | Co Head Marketing",
+    department: "Development | Marketing",
+    bio: "Leading web development and supporting marketing strategies",
     image: "/team/member3.jpg"
   },
   {
     id: 4,
-    name: "Ashish Chhabra",
-    role: "Co Head Designing",
-    department: "Design",
-    bio: "Crafting creative designs and graphics",
+    name: "Shreyansh Tripathi",
+    role: "Co Head Development | Co Head Logistics",
+    department: "Development | Logistics",
+    bio: "Co-leading technical development and logistics operations",
     image: "/team/member4.jpg"
   },
+  // Design Team
   {
     id: 5,
-    name: "Mihika Jain",
-    role: "Co Head Designing",
+    name: "Ajitesh Awasthi",
+    role: "Head Designing",
     department: "Design",
-    bio: "Bringing visual concepts to life",
+    bio: "Creating stunning visual experiences for TEDxJUET",
     image: "/team/member5.jpg"
   },
   {
     id: 6,
-    name: "Kush Sharma",
+    name: "Ashish Chhabra",
     role: "Co Head Designing",
     department: "Design",
-    bio: "Ensuring design excellence across all touchpoints",
+    bio: "Crafting creative designs and graphics",
     image: "/team/member6.jpg"
   },
-  // Logistics Team
   {
     id: 7,
-    name: "Ritesh Mehta",
-    role: "Head Logistics",
-    department: "Logistics",
-    bio: "Managing event operations and logistics seamlessly",
+    name: "Mihika Jain",
+    role: "Co Head Designing",
+    department: "Design",
+    bio: "Bringing visual concepts to life",
     image: "/team/member7.jpg"
   },
   {
     id: 8,
-    name: "Yash Pathak",
-    role: "Co Head Logistics",
-    department: "Logistics",
-    bio: "Coordinating venue and operational requirements",
+    name: "Kush Sharma",
+    role: "Co Head Designing",
+    department: "Design",
+    bio: "Ensuring design excellence across all touchpoints",
     image: "/team/member8.jpg"
   },
+  // Logistics Team
   {
     id: 9,
-    name: "Tanya Rathore",
-    role: "Co Head Logistics",
+    name: "Ritesh Mehta",
+    role: "Head Logistics",
     department: "Logistics",
-    bio: "Ensuring smooth event execution",
+    bio: "Managing event operations and logistics seamlessly",
     image: "/team/member9.jpg"
   },
   {
     id: 10,
-    name: "Shreyansh Tripathi",
+    name: "Yash Pathak",
     role: "Co Head Logistics",
     department: "Logistics",
-    bio: "Managing logistics and coordination",
+    bio: "Coordinating venue and operational requirements",
     image: "/team/member10.jpg"
+  },
+  {
+    id: 11,
+    name: "Tanya Rathore",
+    role: "Co Head Logistics",
+    department: "Logistics",
+    bio: "Ensuring smooth event execution",
+    image: "/team/member11.jpg"
   },
   // Marketing Team
   {
-    id: 11,
+    id: 12,
     name: "Siddhi Jain",
     role: "Head Marketing",
     department: "Marketing",
     bio: "Driving marketing strategies and campaigns",
-    image: "/team/member11.jpg"
-  },
-  {
-    id: 12,
-    name: "Yash Singhal",
-    role: "Co Head Marketing",
-    department: "Marketing",
-    bio: "Managing promotional activities and outreach",
     image: "/team/member12.jpg"
   },
   // Sponsorship Team
@@ -184,15 +185,31 @@ const departments = [
   "Marketing",
   "Sponsorship",
   "Hospitality",
-  "Curation"
+  "Curation",
+  "Development"
 ]
 
 export default function TeamPage() {
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null)
   const [hoveredMember, setHoveredMember] = useState<number | null>(null)
 
+  // Filter and sort members with exception for Marketing tab
   const filteredMembers = selectedDepartment
-    ? teamMembers.filter(m => m.department === selectedDepartment)
+    ? teamMembers
+        .filter(m => m.department.includes(selectedDepartment))
+        .sort((a, b) => {
+          // Exception: For Marketing and Logistics tabs, prioritize members with single department
+          if (selectedDepartment === 'Marketing' || selectedDepartment === 'Logistics') {
+            const aIsPrimary = a.department === selectedDepartment
+            const bIsPrimary = b.department === selectedDepartment
+            
+            if (aIsPrimary && !bIsPrimary) return -1
+            if (!aIsPrimary && bIsPrimary) return 1
+          }
+          
+          // For all other cases, maintain original order by id
+          return a.id - b.id
+        })
     : teamMembers
 
   return (
