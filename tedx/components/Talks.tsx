@@ -61,7 +61,7 @@ export default function Talks() {
             <motion.div
               key={talk.id}
               className={`${styles.card} ${talk.large ? styles.cardLarge : ''}`}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 50 ,}}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ y: -8 }}
